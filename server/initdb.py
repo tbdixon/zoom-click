@@ -1,37 +1,42 @@
-import sqlite3
-import os
+from db_utils import create_db, get_db_connection
 
 
-def create_db():
-    if os.path.exists('zoomclick.db'):
-        os.remove('zoomclick.db')
-    return sqlite3.connect('zoomclick.db')
+def create_user_table() -> None:
+    conn = get_db_connection()
+    conn.execute('CREATE TABLE user (user_name TEXT PRIMARY KEY, user_alias TEXT )')
+    conn.commit()
+    conn.close()
 
 
-def create_user_table(conn) -> None:
-    conn.execute('CREATE TABLE user (user_id INTEGER PRIMARY KEY, user_name TEXT, user_alias TEXT )')
-
-
-def create_user_group_table(conn) -> None:
+def create_user_group_table() -> None:
+    conn = get_db_connection()
     conn.execute('CREATE TABLE user_group (group_id INTEGER PRIMARY KEY, group_name TEXT)')
+    conn.commit()
+    conn.close()
 
 
-def create_group_membership_table(conn) -> None:
-    conn.execute('CREATE TABLE group_membership (group_id INTEGER, user_id INTEGER, '
-                 'FOREIGN KEY (group_id) references user_group(group_id), FOREIGN KEY (user_id) references user(user_id))')
+def create_group_membership_table() -> None:
+    conn = get_db_connection()
+    conn.execute('CREATE TABLE group_membership (group_id INTEGER, user_name TEXT, '
+                 'FOREIGN KEY (group_id) references user_group(group_id), FOREIGN KEY (user_name) references user(user_name))')
+    conn.commit()
+    conn.close()
 
 
-def create_meetings_table(conn) -> None:
+def create_meetings_table() -> None:
+    conn = get_db_connection()
     conn.execute('CREATE TABLE meeting (meeting_id TEXT, meeting_pw TEXT, '
-                 'meeting_user_id INTEGER, FOREIGN KEY (meeting_user_id) REFERENCES user(user_id))')
+                 'meeting_user_name TEXT, FOREIGN KEY (meeting_user_name) REFERENCES user(user_name))')
+    conn.commit()
+    conn.close()
 
 
 def init_db() -> None:
-    conn = create_db()
-    create_user_table(conn)
-    create_meetings_table(conn)
-    create_user_group_table(conn)
-    create_group_membership_table(conn)
+    create_db()
+    create_user_table()
+    create_meetings_table()
+    create_user_group_table()
+    create_group_membership_table()
 
 
 if __name__ == '__main__':
