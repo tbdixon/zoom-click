@@ -26,7 +26,7 @@ def create_group_membership_table() -> None:
 def create_meetings_table() -> None:
     conn = get_db_connection()
     conn.execute('CREATE TABLE meeting (meeting_id TEXT, meeting_pw TEXT, '
-                 'meeting_user_name TEXT, FOREIGN KEY (meeting_user_name) REFERENCES user(user_name))')
+                 'meeting_user_name TEXT, meeting_name TEXT, FOREIGN KEY (meeting_user_name) REFERENCES user(user_name))')
     conn.commit()
     conn.close()
 
