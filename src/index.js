@@ -1,4 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App.js";
-ReactDOM.render(<App />, document.getElementById("root"));
+import ZoomClick from "./ZoomClick.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+ReactDOM.render(<ZoomClick />, document.getElementById("root"));
