@@ -29,6 +29,7 @@ export class ZoomClickDropdown extends Component {
             }))
             console.log("Close Modal")
         }
+        // Create DropdownButton with items that have call-back to open_modals created after the dropdown menu
         return (
             <>
             <DropdownButton
@@ -38,26 +39,25 @@ export class ZoomClickDropdown extends Component {
                 title={this.props.dropdown_name}
                 variant='primary'
             >
-                {this.props.items.map(
-                    item => {
+                {
+                    this.props.items.map( item => {
                         let field_name = item[this.props.field]
-                        return(<Dropdown.Item eventKey={field_name} key={field_name} onClick={() => open_modal(field_name)}>
-                            {
-                            <>    
-                                {field_name}
-                                <Modal show={this.state.show[field_name]} onHide={() => close_modal(field_name)}>
-                                <Modal.Header closeButton>
-                                <Modal.Title>Meetings</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Render a list of meetings as a component here</Modal.Body>
-                                </Modal>  
-                            </>
-                            }
-                    
-                        </Dropdown.Item>)
-                    }
-                )}
+                        return(<Dropdown.Item eventKey={field_name} key={field_name} onClick={() => open_modal(field_name)}>{field_name}</Dropdown.Item>)
+                    })
+                }
             </DropdownButton>
+            {
+                this.props.items.map( item => {
+                    let field_name = item[this.props.field]
+                    return(
+                            <Modal show={this.state.show[field_name]} onHide={() => close_modal(field_name)}>
+                            <Modal.Header closeButton>
+                            <Modal.Title>Meetings</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Render a list of meetings as a component here</Modal.Body>
+                            </Modal>  )
+                })
+            }
             </>
         )
     }

@@ -2,7 +2,7 @@ import React, { Component} from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import {hot} from "react-hot-loader"
 import "./ZoomClick.css";
-import { ZoomClickDropdown } from "./ZoomClickDropdowns"
+import { ZoomClickDropdown } from "./ZoomClickDropdowns.jsx"
 
 
 class ZoomClick extends Component{
