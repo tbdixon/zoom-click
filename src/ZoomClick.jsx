@@ -2,7 +2,8 @@ import React, { Component} from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 import {hot} from "react-hot-loader"
 import "./ZoomClick.css";
-import { ZoomClickDropdown } from "./ZoomClickDropdowns.jsx"
+import { ZoomClickDropdown } from "./ZoomClickDropdowns.jsx";
+import { ZoomClickMeetingForm, ZoomClickUserForm } from "./ZoomClickForms.jsx";
 
 
 class ZoomClick extends Component{
@@ -15,8 +16,8 @@ class ZoomClick extends Component{
       meetings: [],
     }
   }
-
-   componentDidMount() {
+  /* The two fetch calls should be chained, isLoaded probably has a race condition but this isn't robust */
+  componentDidMount() {
     fetch("http://localhost:5000/v1/users/", {
       method: 'GET',
       mode: 'cors',
@@ -62,6 +63,7 @@ class ZoomClick extends Component{
       )
   }
 
+  /* The rendering and usage of things like <br> is hideous here, but all the necessary buttons exist... can clean up this bit later */
   render(){
     const { error, isLoaded, users, meetings } = this.state;
     if(!isLoaded){
@@ -74,14 +76,32 @@ class ZoomClick extends Component{
       return(
         <div className="ZoomClick">
           <Container fluid>
-            <Row>
-              <Col md={6}>
-                <ZoomClickDropdown items={users} dropdown_name='Users' field='user_name'/>
+          <Row className="justify-content-md-center">
+              <Col>
+                <ZoomClickDropdown items={users} dropdown_name='Join by Meeting Owner' field='user_name'/>
               </Col>
-              <Col md={6}>
-              <ZoomClickDropdown items={meetings} dropdown_name='Meetings' field='meeting_name'/>
+              <Col>
+              <ZoomClickDropdown items={meetings} dropdown_name='Join by Meeting Name' field='meeting_name'/>
               </Col>
-            </Row>
+          </Row>
+          <Row>
+              <Col>
+              <br/><br/>
+              <h1>
+                {"Create a new meeting"}
+              </h1>
+              <br/><br/> 
+                <ZoomClickMeetingForm/>
+              </Col>
+              <Col>
+              <br/><br/>
+              <h1>
+              {"Create a new user"}
+              </h1>
+                <br/><br/> 
+                <ZoomClickUserForm/>
+              </Col>
+          </Row>
           </Container>
         </div>
       );
