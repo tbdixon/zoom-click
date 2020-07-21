@@ -91,7 +91,7 @@ class ZoomClick extends Component{
                 {"Create a new meeting"}
               </h1>
               <br/><br/> 
-                <ZoomClickMeetingForm/>
+                <ZoomClickMeetingForm users={users}/>
               </Col>
               <Col>
               <br/><br/>
