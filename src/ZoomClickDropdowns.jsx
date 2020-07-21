@@ -29,6 +29,16 @@ export class ZoomClickDropdown extends Component {
             }))
             console.log("Close Modal")
         }
+        let getMeetings = (val) => {
+            let url = "http://localhost:5000/v1/meetings/" + "?" + this.props.field + "=" + val
+            fetch(url, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }).then(response => {console.log(response.json()); return 5})
+        }
         // Create DropdownButton with items that have call-back to open_modals created after the dropdown menu
         return (
             <>
@@ -54,8 +64,9 @@ export class ZoomClickDropdown extends Component {
                             <Modal.Header closeButton>
                             <Modal.Title>Meetings</Modal.Title>
                             </Modal.Header>
-                            <Modal.Body>Render a list of meetings as a component here</Modal.Body>
-                            </Modal>  )
+                            <Modal.Body>{getMeetings(item)}</Modal.Body>
+                            </Modal>  
+                    )
                 })
             }
             </>

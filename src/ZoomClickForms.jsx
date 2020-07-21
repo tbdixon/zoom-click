@@ -2,11 +2,29 @@ import React, { Component } from "react";
 import {Form, Button} from 'react-bootstrap'
 
 /* Add validation here... e.g do things like users exist, error handling would be nice */
+/* Probably refactor out the various DB interactions into a separate file */
 
-export class ZoomClickMeetingForm extends Component {
+export class ZoomClickUserForm extends Component {
     render() {
+        let createUser = (event) => {
+            event.preventDefault()
+            let body = JSON.stringify({
+                user_name: event.target.elements.formUserName.value,
+                user_alias: event.target.elements.formUserAlias.value
+            })
+            fetch("http://localhost:5000/v1/users/", {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body
+            })
+            .then(response => console.log(response))
+        }
+        
         return(
-            <Form>
+            <Form onSubmit={createUser}>
             <Form.Group controlId="formUserName">
                 <Form.Label>User Name</Form.Label>
                 <Form.Control/>
@@ -14,20 +32,39 @@ export class ZoomClickMeetingForm extends Component {
             <Form.Group controlId="formUserAlias">
                 <Form.Label>User Alias</Form.Label>
                 <Form.Control/>
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
+            <Button type="submit">
+                Create User
             </Button>
+            </Form.Group>
             </Form>
         )
     }
 }
 
-/* Make user name a drop down from the DB */
-export class ZoomClickUserForm extends Component {
+
+export class ZoomClickMeetingForm extends Component {
     render() {
+        let createMeeting = (event) => {
+            event.preventDefault()
+            let body = JSON.stringify({
+                meeting_id: event.target.elements.formMeetingID.value,
+                meeting_pw: event.target.elements.formMeetingPW.value,
+                user_name: event.target.elements.formMeetingUserName.value,
+                meeting_name: event.target.elements.formMeetingName.value
+            })
+            fetch("http://localhost:5000/v1/meetings/", {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body
+            })
+            .then(response => console.log(response))
+        }
+        
         return(
-            <Form>
+            <Form onSubmit={createMeeting}>
             <Form.Group controlId="formMeetingID">
                 <Form.Label>Meeting ID</Form.Label>
                 <Form.Control/>
@@ -38,15 +75,24 @@ export class ZoomClickUserForm extends Component {
             </Form.Group>
             <Form.Group controlId="formMeetingName">
                 <Form.Label>Meeting Name</Form.Label>
-                <Form.Control/>
+            <Form.Control/>
             </Form.Group>
             <Form.Group controlId="formMeetingUserName">
                 <Form.Label>User Name</Form.Label>
-                <Form.Control/>
-            </Form.Group>
-            <Button variant="primary" type="submit">
+                <Form.Control
+                as="select"
+                className="my-1 mr-sm-2"
+                id="formMeetingUserName"
+                custom
+                >
+                    {
+                        this.props.users.map(user => <option value={user.user_name}>{user.user_name}</option>)
+                    }
+                </Form.Control>
+                <Button type="submit">
                 Create Meeting
-            </Button>
+                </Button>
+            </Form.Group>
             </Form>
         )
     }

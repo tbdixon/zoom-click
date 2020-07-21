@@ -19,9 +19,10 @@ def users():
 @app.route('/v1/meetings/', methods=['GET', 'POST'])
 def meetings():
     if request.method == 'POST':
-        return post_insert(request, ['meeting_id', 'meeting_pw', 'meeting_user_name', 'meeting_name'], 'meeting')
+        print(request)
+        return post_insert(request, ['meeting_id', 'meeting_pw', 'user_name', 'meeting_name'], 'meeting')
     if request.method == 'GET':
-        return get_select(request, ['meeting_id', 'meeting_user_name', 'meeting_name'], 'meeting')
+        return get_select(request, ['meeting_id', 'user_name', 'meeting_name'], 'meeting')
     return "Invalid request type", 501
 
 
