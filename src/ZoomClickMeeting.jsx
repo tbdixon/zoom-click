@@ -10,7 +10,7 @@ export default class ZoomClickMeeting extends Component {
                         { 
                             this.props.meetings.map(meeting => 
                                 <>
-                                <a href={`https://goldmansachs.zoom.us/my/${meeting.meeting_id}?pwd=${meeting.meeting_password}`} target="_blank" onClick={() => copy_pw(meeting.meeting_pw)}>
+                                <a href={`https://goldmansachs.zoom.us/s/${meeting.meeting_id}`} target="_blank" onClick={() => copy_pw(meeting.meeting_pw)}>
                                 {meeting.meeting_name}
                                 </a>
                                 <br></br>
