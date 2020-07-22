@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import {Form, Button} from 'react-bootstrap'
 
 /* Add validation here... e.g do things like users exist, error handling would be nice */
-/* Probably refactor out the various DB interactions into a separate file */
+/* Probably refactor out the various DB interactions into a separate file and the completely duplicated 
+   fetch code as well... */
 
 export class ZoomClickUserForm extends Component {
     render() {
         let createUser = (event) => {
-            event.preventDefault()
             let body = JSON.stringify({
                 user_name: event.target.elements.formUserName.value,
                 user_alias: event.target.elements.formUserAlias.value
@@ -41,11 +41,9 @@ export class ZoomClickUserForm extends Component {
     }
 }
 
-
 export class ZoomClickMeetingForm extends Component {
     render() {
         let createMeeting = (event) => {
-            event.preventDefault()
             let body = JSON.stringify({
                 meeting_id: event.target.elements.formMeetingID.value,
                 meeting_pw: event.target.elements.formMeetingPW.value,
