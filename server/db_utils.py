@@ -3,7 +3,7 @@ import os
 from typing import List
 import json
 
-db_name = "zoomclick.db"
+db_name = "server/zoomclick.db"
 
 
 def create_db():
