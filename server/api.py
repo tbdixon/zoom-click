@@ -7,12 +7,13 @@ app = flask.Flask(__name__)
 CORS(app)
 app.config["DEBUG"] = True
 
+
 @app.route('/v1/users/', methods=['GET', 'POST'])
 def users():
     if request.method == 'POST':
         return post_insert(request, ['user_name', 'user_alias'], 'user')
     if request.method == 'GET':
-        return get_select(request,['user_name', 'user_alias'], 'user')
+        return get_select(request, ['user_name', 'user_alias'], 'user')
     return "Invalid request type", 501
 
 
@@ -20,7 +21,8 @@ def users():
 def meetings():
     if request.method == 'POST':
         print(request)
-        return post_insert(request, ['meeting_id', 'meeting_pw', 'user_name', 'meeting_name'], 'meeting')
+        return post_insert(request, ['meeting_id', 'meeting_pw', 'user_name', 'meeting_name', 'meeting_company'],
+                           'meeting')
     if request.method == 'GET':
         return get_select(request, ['meeting_id', 'user_name', 'meeting_name'], 'meeting')
     return "Invalid request type", 501

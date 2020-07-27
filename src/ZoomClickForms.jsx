@@ -48,7 +48,8 @@ export class ZoomClickMeetingForm extends Component {
                 meeting_id: event.target.elements.formMeetingID.value,
                 meeting_pw: event.target.elements.formMeetingPW.value,
                 user_name: event.target.elements.formMeetingUserName.value,
-                meeting_name: event.target.elements.formMeetingName.value
+                meeting_name: event.target.elements.formMeetingName.value,
+                company_name: event.target.elements.formMeetingCompany.value
             })
             fetch("http://localhost:5000/v1/meetings/", {
                 method: 'POST',
@@ -73,6 +74,10 @@ export class ZoomClickMeetingForm extends Component {
             </Form.Group>
             <Form.Group controlId="formMeetingName">
                 <Form.Label>Meeting Name</Form.Label>
+            <Form.Control/>
+            </Form.Group>
+            <Form.Group controlId="formMeetingCompany">
+                <Form.Label>Meeting Company</Form.Label>
             <Form.Control/>
             </Form.Group>
             <Form.Group controlId="formMeetingUserName">
