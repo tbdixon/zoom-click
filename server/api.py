@@ -20,7 +20,6 @@ def users():
 @app.route('/v1/meetings/', methods=['GET', 'POST'])
 def meetings():
     if request.method == 'POST':
-        print(request)
         return post_insert(request, ['meeting_id', 'meeting_pw', 'user_name', 'meeting_name', 'meeting_company'],
                            'meeting')
     if request.method == 'GET':

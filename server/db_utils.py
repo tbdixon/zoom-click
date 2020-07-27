@@ -21,7 +21,6 @@ def check_required_args(input_args, args: List[str]) -> bool:
 
 
 def post_insert(request, required_args: List[str], table: str) -> tuple:
-    # TODO: Handle rollback in case of DB issues so it doesn't hang locked
     if check_required_args(request.json, required_args):
         values = ','.join([f'\'{request.json[arg]}\'' for arg in required_args])
         conn = get_db_connection()
@@ -37,12 +36,7 @@ def get_select(request, where_fields: List[str], table: str) -> tuple:
     conn.row_factory = sqlite3.Row
     with conn:
         curr = conn.cursor()
-        # Handle no where_fields being passed in with a dummy clause for parsing... list comprehension is probably more
-        # pythonic but this is very clear
-        where_clause = ['1=1']
-        for field in where_fields:
-            if field in request.args:
-                where_clause.append(f'{field} = "{request.args[field]}"')
+        where_clause = ['1=1'] + [f'{field} = "{request.args[field]}"' for field in where_fields if field in request.args]
         where_clause = ' and '.join(where_clause)
         ret = json.dumps([dict(row) for row in curr.execute(f'SELECT * FROM {table} WHERE {where_clause}').fetchall()])
         return ret, 200

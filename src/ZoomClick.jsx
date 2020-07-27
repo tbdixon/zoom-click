@@ -16,7 +16,6 @@ class ZoomClick extends Component{
       meetings: [],
     }
   }
-  /* The two fetch calls should be chained, isLoaded probably has a race condition but this isn't robust */
   componentDidMount() {
     fetch("http://localhost:5000/v1/users/", {
       method: 'GET',
@@ -29,17 +28,15 @@ class ZoomClick extends Component{
     .then(
       data => {
           this.setState({
-            isLoaded: true,
             users: data
           })
         },
         (error) => {
           this.setState({
-            isLoaded: true,
             error
           });
         }
-      )
+    ).then(
     fetch("http://localhost:5000/v1/meetings/", {
       method: 'GET',
       mode: 'cors',
@@ -61,6 +58,7 @@ class ZoomClick extends Component{
           });
         }
       )
+    )
   }
 
   /* The rendering and usage of things like <br> is hideous here, but all the necessary buttons exist... can clean up this bit later */

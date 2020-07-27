@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import {Form, Button} from 'react-bootstrap'
 
-/* Add validation here... e.g do things like users exist, error handling would be nice */
-/* Probably refactor out the various DB interactions into a separate file and the completely duplicated 
-   fetch code as well... */
-
 export class ZoomClickUserForm extends Component {
     render() {
         let createUser = (event) => {
@@ -20,7 +16,6 @@ export class ZoomClickUserForm extends Component {
                 },
                 body
             })
-            .then(response => console.log(response))
         }
         
         return(
@@ -49,7 +44,7 @@ export class ZoomClickMeetingForm extends Component {
                 meeting_pw: event.target.elements.formMeetingPW.value,
                 user_name: event.target.elements.formMeetingUserName.value,
                 meeting_name: event.target.elements.formMeetingName.value,
-                company_name: event.target.elements.formMeetingCompany.value
+                meeting_company: event.target.elements.formMeetingCompany.value
             })
             fetch("http://localhost:5000/v1/meetings/", {
                 method: 'POST',
@@ -59,7 +54,6 @@ export class ZoomClickMeetingForm extends Component {
                 },
                 body
             })
-            .then(response => console.log(response))
         }
         
         return(
@@ -77,20 +71,15 @@ export class ZoomClickMeetingForm extends Component {
             <Form.Control/>
             </Form.Group>
             <Form.Group controlId="formMeetingCompany">
-                <Form.Label>Meeting Company</Form.Label>
+                <Form.Label>Meeting Company Domain</Form.Label>
             <Form.Control/>
             </Form.Group>
             <Form.Group controlId="formMeetingUserName">
                 <Form.Label>User Name</Form.Label>
-                <Form.Control
-                as="select"
-                className="my-1 mr-sm-2"
-                id="formMeetingUserName"
-                custom
-                >
-                    {
-                        this.props.users.map(user => <option value={user.user_name}>{user.user_name}</option>)
-                    }
+                <Form.Control as="select" className="my-1 mr-sm-2" id="formMeetingUserName" custom>
+                {
+                    this.props.users.map(user => <option value={user.user_name}>{user.user_name}</option>)
+                }
                 </Form.Control>
                 <Button type="submit">
                 Create Meeting
